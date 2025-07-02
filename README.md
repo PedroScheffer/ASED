@@ -26,3 +26,31 @@ Este projeto consiste em um jogo de tabuleiro desenvolvido em Java, onde os joga
    ```bash
    git clone https://github.com/PedroScheffer/ASED.git
    cd <PASTA_DO_PROJETO>
+
+2. Compile o projeto:
+   - **Usando IDE**: Importe o projeto na sua IDE (como IntelliJ IDEA) e compile a classe principal `Main`.
+   - **Usando Terminal**:
+     ```bash
+     javac -d bin src/*.java
+     ```
+
+3. Execute o projeto:
+   - **Usando IDE**: Execute a classe `Main` diretamente pela IDE.
+   - **Usando Terminal**:
+     ```bash
+     java -cp bin Main
+     ```
+
+4. Siga as instruções exibidas no menu principal para jogar.
+
+## Funcionalidades do Jogo
+
+- **Gerenciamento de Jogadores**: Permite cadastrar, listar, atualizar e remover jogadores.
+- **Gerenciamento de Imóveis**: Permite cadastrar, listar, atualizar e remover imóveis.
+- **Simulação de Rodadas**: Jogadores lançam dados, avançam no tabuleiro e interagem com as casas.
+- **Cobrança de Aluguel**: Jogadores pagam aluguel ao cair em propriedades de outros jogadores.
+- **Cobrança de Impostos**: Jogadores pagam 10% do saldo ao cair em casas de imposto.
+- **Salário por Volta**: Jogadores recebem um salário ao completar uma volta no tabuleiro.
+- **Negociações**: Jogadores podem negociar propriedades entre si.
+- **Ranking Final**: Exibe o ranking dos jogadores com base no patrimônio acumulado.
+- **Fim de Jogo**: O jogo termina quando o número máximo de rodadas é atingido ou restar apenas um jogador ativo.
