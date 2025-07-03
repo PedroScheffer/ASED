@@ -354,9 +354,25 @@ public class Main {
             double imposto = jogador.getSaldo() * 0.10;
             jogador.setSaldo(jogador.getSaldo() - imposto);
             System.out.printf("Você parou na casa de Imposto e pagou R$ %.2f.%n", imposto);
+        } else if ("Restituição".equals(casaAtual.getTipo())) {
+            double restituição = jogador.getSaldo() * 0.10;
+            jogador.setSaldo(jogador.getSaldo() + restituição);
+            System.out.printf("Você parou na casa de Restituição e recebeu R$ %.2f.%n", restituição);
         } else if (casaAtual.getImovel() != null) {
             Imovel imovel = casaAtual.getImovel();
-            if (imovel.getProprietario() != null && !imovel.getProprietario().equals(jogador)) {
+            if (imovel.getProprietario() == null) {
+                System.out.printf("O imóvel '%s' está disponível para compra por R$ %.2f.%n", imovel.getNome(), imovel.getPreco());
+                System.out.print("Deseja comprá-lo? (s/n): ");
+                String resposta = scanner.nextLine();
+                if (resposta.equalsIgnoreCase("s") && jogador.getSaldo() >= imovel.getPreco()) {
+                    jogador.setSaldo(jogador.getSaldo() - imovel.getPreco());
+                    jogador.adicionarPropriedade(imovel);
+                    imovel.setProprietario(jogador);
+                    System.out.printf("Você comprou o imóvel '%s'.%n", imovel.getNome());
+                } else if (resposta.equalsIgnoreCase("s")) {
+                    System.out.println("Saldo insuficiente para comprar este imóvel.");
+                }
+            } else if (!imovel.getProprietario().equals(jogador)) {
                 double aluguel = imovel.getAluguel();
                 if (jogador.getSaldo() >= aluguel) {
                     jogador.setSaldo(jogador.getSaldo() - aluguel);
@@ -482,6 +498,12 @@ public class Main {
         return jogadoresAtivos <= 1;
     }
 
+    private static void reiniciarEstadoDoJogo() {
+        rodadaAtual = 1;
+        jogadores.clear();
+        imoveis.clear();
+    }
+
     private static void exibirFimDeJogo(String motivo) {
         System.out.println("=========================================");
         System.out.println("======          FIM DE JOGO!         ======");
@@ -504,16 +526,19 @@ public class Main {
                 scanner.nextLine();
             } else {
                 System.out.println("Entrada inválida. Digite um número entre 0 e 2.");
-                scanner.nextLine(); // Limpa a entrada inválida
+                scanner.nextLine();
             }
         }
 
         switch (opcao) {
             case 1 -> {
-                rodadaAtual = 1;
+                reiniciarEstadoDoJogo();
                 iniciarJogo(scanner);
             }
-            case 2 -> Main.main(null);
+            case 2 -> {
+                reiniciarEstadoDoJogo();
+                Main.main(null);
+            }
             case 0 -> System.out.println("Encerrando o programa. Até a próxima!");
         }
     }
